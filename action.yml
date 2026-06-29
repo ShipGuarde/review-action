@@ -1,0 +1,41 @@
+name: 'ShipGuarde Review'
+description: 'Run a ShipGuarde review on a pull request and gate the job on the verdict.'
+author: 'ShipGuarde'
+branding:
+  icon: 'shield'
+  color: 'green'
+inputs:
+  api-key:
+    description: 'ShipGuarde API key (sg_pat_…). Store it as a repo secret.'
+    required: true
+  project-id:
+    description: 'ShipGuarde project id to run against.'
+    required: true
+  api-url:
+    description: 'ShipGuarde API base URL.'
+    required: false
+    default: 'https://api.shipguarde.com'
+  target-url:
+    description: 'Deployment / preview URL to drive browser checks against (optional).'
+    required: false
+    default: ''
+  agents:
+    description: 'Comma-separated agent kinds to run (optional; defaults to the project policy).'
+    required: false
+    default: ''
+  fail-on:
+    description: 'When to fail the job: "block", "block_or_warn", or "never".'
+    required: false
+    default: 'block'
+  timeout-seconds:
+    description: 'Maximum seconds to wait for the verdict.'
+    required: false
+    default: '900'
+outputs:
+  run-id:
+    description: 'The ShipGuarde run id.'
+  verdict:
+    description: 'The verdict decision (ship | ship_with_warnings | block | inconclusive).'
+runs:
+  using: 'node20'
+  main: 'index.mjs'
