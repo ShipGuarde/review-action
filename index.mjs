@@ -29,6 +29,7 @@ const apiKey = input('api-key');
 const projectId = input('project-id');
 const apiUrl = input('api-url', 'https://api.shipguarde.com').replace(/\/$/, '');
 const targetUrl = input('target-url');
+const githubToken = input('github-token');
 const agents = input('agents')
   .split(',')
   .map((s) => s.trim())
@@ -50,6 +51,10 @@ try {
         number: ev.pull_request.number,
         headSha: ev.pull_request.head.sha,
         baseSha: ev.pull_request.base.sha,
+        // The workflow token lets the API clone a private repo and post the
+        // verdict without a ShipGuarde App installation. It is held for the run
+        // only and never persisted.
+        ...(githubToken ? { token: githubToken } : {}),
       };
     }
   }
