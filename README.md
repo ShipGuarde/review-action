@@ -41,6 +41,17 @@ The job fails if the verdict is `block`, so a required check keeps risky changes
     target-url: https://pr-${{ github.event.number }}.preview.example.com
 ```
 
+**Drive a journey on the preview and deny the merge if it breaks**
+
+```yaml
+- uses: ShipGuarde/review-action@v1
+  with:
+    api-key: ${{ secrets.SHIPGUARDE_API_KEY }}
+    project-id: your-project-id
+    target-url: https://pr-${{ github.event.number }}.preview.example.com
+    flow: Click the Status filter, choose Failed, and confirm only Failed rows remain.
+```
+
 **Run specific agents and also fail on warnings**
 
 ```yaml
@@ -88,6 +99,7 @@ The token is held by ShipGuarde for the run and dropped once the verdict is publ
 | `api-url`         | no       | `https://api.shipguarde.com` | ShipGuarde API base URL.                                                     |
 | `target-url`      | no       | `''`                         | Deployment / preview URL to drive browser checks against.                   |
 | `github-token`    | no       | `${{ github.token }}`        | Token for cloning a private repo and posting the verdict without the App.   |
+| `flow`            | no       | `''`                         | A plain-English journey for the vision agent to drive on `target-url`.      |
 | `agents`          | no       | `''`                         | Comma-separated agent kinds to run. Defaults to the project policy.         |
 | `fail-on`         | no       | `block`                      | When to fail the job: `block`, `block_or_warn`, or `never`.                  |
 | `timeout-seconds` | no       | `900`                        | Maximum seconds to wait for the verdict.                                     |

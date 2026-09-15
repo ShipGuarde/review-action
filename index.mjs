@@ -38,6 +38,7 @@ const projectId = input('project-id');
 const apiUrl = input('api-url', 'https://api.shipguarde.com').replace(/\/$/, '');
 const targetUrl = input('target-url');
 const githubToken = input('github-token');
+const flow = input('flow').trim();
 const agents = input('agents')
   .split(',')
   .map((s) => s.trim())
@@ -59,6 +60,10 @@ try {
         number: ev.pull_request.number,
         headSha: ev.pull_request.head.sha,
         baseSha: ev.pull_request.base.sha,
+        // The preview is the PR's deployment: recorded on the run so browser
+        // findings count against this build and the diff-aware flow suggestion
+        // has somewhere to run.
+        ...(targetUrl ? { deploymentUrl: targetUrl } : {}),
         // The workflow token lets the API clone a private repo and post the
         // verdict without a ShipGuarde App installation. It is held for the run
         // only and never persisted.
@@ -77,6 +82,7 @@ const body = {
   agentKinds: agents,
   ...(targetUrl ? { targetUrl } : {}),
   ...(pr ? { pr } : {}),
+  ...(flow ? { adhocFlow: { description: flow } } : {}),
 };
 
 const createRes = await fetch(`${apiUrl}/api/runs`, {
