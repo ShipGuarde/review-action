@@ -112,7 +112,7 @@ A run that errors, is cancelled, or times out without a verdict also fails the j
 ## Notes
 
 - Runs in PR mode and posts the verdict back to the pull request. On non-PR events it falls back to an on-demand run.
-- Zero dependencies — runs on `node20`, nothing to install.
+- Zero dependencies — runs on `node24`, nothing to install.
 
 ## Links
 

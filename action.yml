@@ -44,5 +44,5 @@ outputs:
   verdict:
     description: 'The verdict decision (ship | ship_with_warnings | block | inconclusive).'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'index.mjs'
