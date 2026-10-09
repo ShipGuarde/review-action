@@ -135,3 +135,5 @@ A run that errors, is cancelled, or times out without a verdict also fails the j
 ## License
 
 [MIT](LICENSE)
+
+<!-- maintenance note: checked 9 Oct 2026 -->
